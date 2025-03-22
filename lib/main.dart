@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_perpus/modules/auth/src/screens/splash_screen.dart';
@@ -12,9 +10,7 @@ void main() {
   final authService = AuthService();
   runApp(
     MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => AuthBloc(authService)),
-      ],
+      providers: [BlocProvider(create: (_) => AuthBloc(authService))],
       child: MyApp(),
     ),
   );
