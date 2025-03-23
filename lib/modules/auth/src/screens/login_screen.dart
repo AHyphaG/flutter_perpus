@@ -20,7 +20,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onLoginPressed() {
     final email = emailController.text;
     final password = passwordController.text;
-    context.read<AuthBloc>().add(AuthLoginRequested(email: email, password: password));
+    context.read<AuthBloc>().add(
+      AuthLoginRequested(email: email, password: password),
+    );
   }
 
   @override
@@ -30,10 +32,14 @@ class _LoginScreenState extends State<LoginScreen> {
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is AuthSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Login berhasil!")));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text("Login berhasil!")));
             Navigator.pushReplacementNamed(context, HomeScreen.routeName);
           } else if (state is AuthFailure) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text(state.message)));
           }
         },
         builder: (context, state) {
@@ -47,24 +53,28 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 TextField(
-                  controller: emailController, 
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Username',
                     icon: Icon(Icons.person),
-                    border: OutlineInputBorder()
-                    ),
+                    border: OutlineInputBorder(),
                   ),
-                SizedBox(height: 20,),
+                ),
+                SizedBox(height: 20),
                 TextField(
-                  controller: passwordController, 
+                  controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     icon: Icon(Icons.lock),
-                    border: OutlineInputBorder()
-                    ), 
-                  obscureText: true),
+                    border: OutlineInputBorder(),
+                  ),
+                  obscureText: true,
+                ),
                 SizedBox(height: 20),
-                ElevatedButton(onPressed: _onLoginPressed, child: Text('Login')),
+                ElevatedButton(
+                  onPressed: _onLoginPressed,
+                  child: Text('Login'),
+                ),
               ],
             ),
           );

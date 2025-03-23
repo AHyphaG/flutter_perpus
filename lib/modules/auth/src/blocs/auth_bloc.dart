@@ -13,7 +13,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (token != null) {
         emit(AuthSuccess(token: token));
       } else {
-        emit(AuthFailure(message: "Login gagal. Username atau password salah."));
+        emit(
+          AuthFailure(message: "Login gagal. Username atau password salah."),
+        );
       }
     });
   }

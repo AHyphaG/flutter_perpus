@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:flutter_perpus/config/app_config.dart';
+
 class AuthService {
-  final String baseUrl = "http://localhost:8080/perpusjayaabadi/api/auth";
+  final String baseUrl = "${AppConfig.baseUrl}/auth";
 
   Future<String?> login(String email, String password) async {
     final response = await http.post(

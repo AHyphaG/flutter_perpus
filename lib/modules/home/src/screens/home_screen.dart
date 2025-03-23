@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_perpus/enums.dart';
+import 'package:flutter_perpus/widgets/custom_navbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,6 +32,7 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(fontSize: 18),
         ),
       ),
+      bottomNavigationBar: CustomNavBar(selectedMenu: MenuState.home),
     );
   }
 }
