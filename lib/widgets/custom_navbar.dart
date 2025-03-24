@@ -10,74 +10,73 @@ class CustomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(40),
           topRight: Radius.circular(40),
         ),
         boxShadow: [
           BoxShadow(
-            color: Color.fromARGB(255, 245, 76, 76).withOpacity(0.5),
+            color: Color.fromRGBO(
+              245,
+              76,
+              76,
+              0.5,
+            ), // Ganti dengan Color.fromRGBO
             blurRadius: 20,
-            offset: Offset(0, -15),
+            offset: const Offset(0, -15),
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          IconButton(
-            icon: Icon(Icons.home),
-            color:
-                selectedMenu == MenuState.home
-                    ? Colors.white
-                    : Colors.grey.shade400,
-            onPressed:
-                () => Navigator.pushReplacementNamed(
-                  context,
-                  HomeScreen.routeName,
-                ),
+          _buildNavItem(
+            context,
+            Icons.home,
+            MenuState.home,
+            HomeScreen.routeName,
           ),
-          IconButton(
-            icon: Icon(Icons.shopping_cart_rounded),
-            color:
-                selectedMenu == MenuState.cart
-                    ? Colors.white
-                    : Colors.grey.shade400,
-            onPressed:
-                () => Navigator.pushReplacementNamed(
-                  context,
-                  HomeScreen.routeName,
-                ),
+          _buildNavItem(
+            context,
+            Icons.shopping_cart_rounded,
+            MenuState.cart,
+            HomeScreen.routeName,
           ),
-          IconButton(
-            icon: Icon(Icons.article_rounded),
-            color:
-                selectedMenu == MenuState.bookings
-                    ? Colors.white
-                    : Colors.grey.shade400,
-            onPressed:
-                () => Navigator.pushReplacementNamed(
-                  context,
-                  HomeScreen.routeName,
-                ),
+          _buildNavItem(
+            context,
+            Icons.article_rounded,
+            MenuState.bookings,
+            HomeScreen.routeName,
           ),
-          IconButton(
-            icon: Icon(Icons.person),
-            color:
-                selectedMenu == MenuState.profile
-                    ? Colors.white
-                    : Colors.grey.shade400,
-            onPressed:
-                () => Navigator.pushReplacementNamed(
-                  context,
-                  HomeScreen.routeName,
-                ),
+          _buildNavItem(
+            context,
+            Icons.person,
+            MenuState.profile,
+            HomeScreen.routeName,
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildNavItem(
+    BuildContext context,
+    IconData icon,
+    MenuState menu,
+    String route,
+  ) {
+    return IconButton(
+      icon: Icon(icon),
+      color: selectedMenu == menu ? Colors.white : Colors.grey.shade400,
+      onPressed: () {
+        if (Navigator.canPop(context)) {
+          Navigator.pop(context);
+        }
+        Navigator.pushReplacementNamed(context, route);
+      },
     );
   }
 }

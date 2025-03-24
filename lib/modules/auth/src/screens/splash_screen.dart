@@ -20,7 +20,9 @@ class _SplashScreenState extends State<SplashScreen> {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
 
-    await Future.delayed(const Duration(seconds: 2)); // Biar ada delay efek splash
+    await Future.delayed(
+      const Duration(seconds: 2),
+    ); // Biar ada delay efek splash
 
     if (token != null) {
       Navigator.pushReplacementNamed(context, '/home');
@@ -32,9 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: Text("Cold Money", style: TextStyle(fontSize: 24)),
-      ),
+      body: Center(child: Text("Cold Money", style: TextStyle(fontSize: 24))),
     );
   }
 }
