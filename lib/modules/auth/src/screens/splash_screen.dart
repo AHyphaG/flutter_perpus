@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_perpus/modules/navigation/src/screens/navigation_menu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
     ); // Biar ada delay efek splash
 
     if (token != null) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, NavigationMenu.routeName);
     } else {
       Navigator.pushReplacementNamed(context, '/login');
     }

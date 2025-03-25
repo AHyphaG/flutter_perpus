@@ -1,81 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_perpus/enums.dart';
-import 'package:flutter_perpus/modules/home/src/screens/home_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_perpus/modules/navigation/src/navbar_bloc.dart/navbar_bloc.dart';
 
 class CustomNavBar extends StatelessWidget {
-  const CustomNavBar({super.key, required this.selectedMenu});
-
-  final MenuState selectedMenu;
+  const CustomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: Radius.circular(40),
-          topRight: Radius.circular(40),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(
-              245,
-              76,
-              76,
-              0.5,
-            ), // Ganti dengan Color.fromRGBO
-            blurRadius: 20,
-            offset: const Offset(0, -15),
+    return BlocBuilder<NavBarBloc, NavBarState>(
+      buildWhen: (prev, curr) => prev.selectedMenu != curr.selectedMenu,
+      builder: (context, state) {
+        return Container(
+          decoration: const BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 8,
+                offset: Offset(0, -15),
+              ),
+            ],
           ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          _buildNavItem(
-            context,
-            Icons.home,
-            MenuState.home,
-            HomeScreen.routeName,
+          child: ClipRRect(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                navigationBarTheme: NavigationBarThemeData(
+                  indicatorColor: Theme.of(context).indicatorColor,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  labelTextStyle: MaterialStateProperty.resolveWith<TextStyle>((
+                    states,
+                  ) {
+                    if (states.contains(MaterialState.selected)) {
+                      return const TextStyle(
+                        color: Colors.greenAccent,
+                        fontWeight: FontWeight.bold,
+                      );
+                    }
+                    return const TextStyle(color: Colors.white);
+                  }),
+                  iconTheme: MaterialStateProperty.resolveWith<IconThemeData>((
+                    states,
+                  ) {
+                    if (states.contains(MaterialState.selected)) {
+                      return const IconThemeData(color: Colors.greenAccent);
+                    }
+                    return const IconThemeData(color: Colors.white);
+                  }),
+                ),
+              ),
+              child: NavigationBar(
+                height: 80,
+                shadowColor: const Color.fromARGB(
+                  255,
+                  97,
+                  53,
+                  179,
+                ).withOpacity(0.3),
+                // surfaceTintColor: const Color.fromARGB(255, 113, 32, 179),
+                backgroundColor: Theme.of(context).primaryColor,
+                indicatorColor: Theme.of(context).indicatorColor,
+                selectedIndex: state.selectedMenu.index,
+                onDestinationSelected: (index) {
+                  final selectedMenu = MenuState.values[index];
+                  context.read<NavBarBloc>().add(ChangeMenuEvent(selectedMenu));
+                },
+                destinations: const [
+                  NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
+                  NavigationDestination(
+                    icon: Icon(Icons.shopping_cart),
+                    label: 'Cart',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.article),
+                    label: 'Bookings',
+                  ),
+                  NavigationDestination(
+                    icon: Icon(Icons.person),
+                    label: 'Profile',
+                  ),
+                ],
+              ),
+            ),
           ),
-          _buildNavItem(
-            context,
-            Icons.shopping_cart_rounded,
-            MenuState.cart,
-            HomeScreen.routeName,
-          ),
-          _buildNavItem(
-            context,
-            Icons.article_rounded,
-            MenuState.bookings,
-            HomeScreen.routeName,
-          ),
-          _buildNavItem(
-            context,
-            Icons.person,
-            MenuState.profile,
-            HomeScreen.routeName,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavItem(
-    BuildContext context,
-    IconData icon,
-    MenuState menu,
-    String route,
-  ) {
-    return IconButton(
-      icon: Icon(icon),
-      color: selectedMenu == menu ? Colors.white : Colors.grey.shade400,
-      onPressed: () {
-        if (Navigator.canPop(context)) {
-          Navigator.pop(context);
-        }
-        Navigator.pushReplacementNamed(context, route);
+        );
       },
     );
   }
