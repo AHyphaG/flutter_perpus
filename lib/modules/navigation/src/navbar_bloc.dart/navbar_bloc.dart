@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_perpus/modules/profile/src/bloc/profile_bloc.dart';
-import 'package:flutter_perpus/modules/profile/src/bloc/profile_event.dart';
+import 'package:flutter_perpus/modules/profile/src/blocs/profile_bloc.dart';
+import 'package:flutter_perpus/modules/profile/src/blocs/profile_event.dart';
 
 enum MenuState { home, cart, bookings, profile }
 

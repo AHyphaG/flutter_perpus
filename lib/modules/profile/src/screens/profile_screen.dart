@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_perpus/modules/profile/src/bloc/profile_bloc.dart';
-import 'package:flutter_perpus/modules/profile/src/bloc/profile_state.dart';
+import 'package:flutter_perpus/modules/profile/src/blocs/profile_bloc.dart';
+import 'package:flutter_perpus/modules/profile/src/blocs/profile_state.dart';
 
 class ProfileScreen extends StatelessWidget {
   static final routeName = '/profile';
